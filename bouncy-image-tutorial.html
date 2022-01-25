@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouncing Image</title>
+</head>
+<body>
+    <canvas id="gameCanvas" width="1400px" height="750px" style="border: 4px solid black; position: absolute; z-index: -1"></canvas>
+
+    <div style="display: flex; flex-direction: column; position: absolute;; top: 40%; left: 35%">
+        <button id="Thing" style="width:350px; height: 100px; font-size: 3rem">Press Me</button>
+        <div id="xVelo" style="width:300px; height: 45px; border: 3px solid black; border-radius: 6px; margin-top: 5px; font-size: 2.5rem"></div>
+        <div id="yVelo" style="width:300px; height: 45px; border: 3px solid black; border-radius: 6px; margin-top: 5px; font-size: 2.5rem"></div>
+    </div>
+
+    <img id="google" style="width: 100px; height:100px; position: absolute; z-index: 1" src="./art&design/GC logo.png">
+   
+    <script>
+        const button = document.getElementById('Thing')
+        const Google = document.getElementById('google')
+        const FPS = 30
+
+        const canvas = document.getElementById("gameCanvas")
+        console.log("canvas height and width are " + canvas.height + " & " + canvas.width)
+
+        var size = 50
+        degree = 0
+        // var context;
+        console.log("page dimensions are " + canvas.width + " x " + canvas.height)
+
+        var LogoX = 0
+        var LogoY = 0
+        var clicks = 0
+
+        xVelo = Math.floor(Math.random() * 501 + 100) / FPS
+        yVelo = Math.floor(Math.random() * 501 + 100) / FPS
+
+        button.addEventListener('click', bounce)
+
+        function bounce() {
+            clicks = 1
+            // context.fillStyle = "./art&design/GC logo.png"
+            // context.fillRect(LogoX - size / 2, LogoY- size / 2, size, size)
+            Google.style.top = `${LogoY}px`
+            Google.style.left = `${LogoX}px`
+            console.log("postion is " + Google.style.top, Google.style.left)
+            // Google.src = "./art&design/GC logo.png"
+
+            setInterval(update, 1000 / FPS )
+            console.log("bouncy")
+        }
+
+        function update() {
+            // if (clicks = 1) {
+                button.disabled = true
+                degree += 15
+                // apply movement first THEN rotate so it works properly
+                Google.style.transform = `translate(${LogoX}px, ${LogoY}px)`
+                LogoX += xVelo
+                LogoY += yVelo
+                //+= allows for multiple transforms
+                Google.style.transform += `rotate(${degree}deg)`
+                // `translate(${LogoX}px, ${LogoY}px)`
+            // }
+            canvas.getContext("2d")
+
+            var xInput = document.getElementById('xVelo')
+            var yInput = document.getElementById('yVelo')
+            xInput.textContent = Math.floor(LogoX)
+            yInput.textContent = Math.floor(LogoY)
+
+            if (LogoX - size / 2 < -25 && xVelo < 0) {
+                xVelo = -xVelo
+            }
+            else if (LogoX + size * 2 > canvas.width && xVelo > 0) {
+                xVelo = -xVelo
+            }
+            if (LogoY - size / 2 < -25 && yVelo < 0) {
+                yVelo = -yVelo
+            }
+            else if (LogoY + size * 2 > canvas.height && yVelo > 0) {
+                yVelo = -yVelo
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!-- https://www.youtube.com/watch?v=DeqE2yn3v6Q -->
+
+ <!-- <canvas id="gameCanvas" width="400" height="300"></canvas>
+    <script>
+        const FPS = 30
+        var bs = 30;
+        var bx, by;
+        var xVelo, yVelo
+        var canvas, context;
+
+        canvas = document.getElementById("gameCanvas")
+        // this makes the game 2D
+        context = canvas.getContext("2d")
+        // this sets the intervals to 1/30th of a second
+        setInterval(update, 1000 / FPS)
+        // this sets up the starting position in the middle of the canvas
+        bx = canvas.width / 2;
+        by = canvas.height / 2;
+        // sets velocity to between 100-200
+        xVelo = Math.floor(Math.random() * 76 + 25) / FPS
+        yVelo = Math.floor(Math.random() * 76 + 25) / FPS
+        console.log("x & y velocities are " + xVelo, yVelo)
+
+        // this determines a random number of either 0 or 1
+        if (Math.floor(Math.random() * 2) == 0) {
+            xVelo = -xVelo
+            yVelo = -yVelo
+        }
+
+        // because update function is set to a time interval, it continuously uodates the balls location to whatever the x & y velocities are
+        function update() {
+            bx += xVelo;
+            by += yVelo
+
+            if (bx - bs / 2 < 0 && xVelo < 0) {
+                xVelo = -xVelo
+            }
+            else if (bx + bs / 2 > canvas.width && xVelo > 0) {
+                xVelo = -xVelo
+            }
+            if (by - bs / 2 < 0 && yVelo < 0) {
+                yVelo = -yVelo
+            }
+            else if (by + bs / 2 > canvas.height && yVelo > 0) {
+                yVelo = -yVelo
+            }
+
+
+            context.fillStyle = "darkcyan"
+            //(x, y, width, height)
+            context.fillRect(0, 0, canvas.width, canvas.height)
+            context.fillStyle = "yellow"
+            context.fillRect(bx - bs / 2, by - bs / 2, bs, bs)
+        }
+    </script> -->
