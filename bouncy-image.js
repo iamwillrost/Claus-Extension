@@ -1,67 +1,81 @@
 const Google = document.getElementById('google')
-        const FPS = 30
+const FPS = 30
 
-        const canvas = document.getElementById("gameCanvas")
-        console.log("canvas height and width are " + canvas.height + " & " + canvas.width)
+let listInput = document.getElementById("siteList")
 
-        var size = 50
-        degree = 0
-        // var context;
-        console.log("page dimensions are " + canvas.width + " x " + canvas.height)
+const canvas = document.getElementById("gameCanvas")
+// console.log("canvas height and width are " + canvas.height + " & " + canvas.width)
 
-        var LogoX = 0
-        var LogoY = 0
-        var clicks = 0
+var size = 50
+degree = 0
+// var context;
+// console.log("page dimensions are " + canvas.width + " x " + canvas.height)
 
-        xVelo = Math.floor(Math.random() * 501 + 100) / FPS
-        yVelo = Math.floor(Math.random() * 501 + 100) / FPS
+var LogoX = 0
+var LogoY = 0
+var clicks = 0
 
-        // button.addEventListener('click', bounce)
+xVelo = Math.floor(Math.random() * 501 + 100) / FPS
+yVelo = Math.floor(Math.random() * 501 + 100) / FPS
 
-        function bounce() {
-            // clicks = 1
-            // context.fillStyle = "./art&design/GC logo.png"
-            // context.fillRect(LogoX - size / 2, LogoY- size / 2, size, size)
-            Google.style.top = `${LogoY}px`
-            Google.style.left = `${LogoX}px`
-            console.log("postion is " + Google.style.top, Google.style.left)
-            // Google.src = "./art&design/GC logo.png"
+// button.addEventListener('click', bounce)
 
-            setInterval(update, 1000 / FPS )
-            console.log("bouncy")
-        }
+function bounce() {
+    // clicks = 1
+    // context.fillStyle = "./art&design/GC logo.png"
+    // context.fillRect(LogoX - size / 2, LogoY- size / 2, size, size)
+    Google.style.top = `${LogoY}px`
+    Google.style.left = `${LogoX}px`
+    console.log("postion is " + Google.style.top, Google.style.left)
+    // Google.src = "./art&design/GC logo.png"
 
-        function update() {
-            // if (clicks = 1) {
-                // button.disabled = true
-                degree += 15
-                // apply movement first THEN rotate so it works properly
-                Google.style.transform = `translate(${LogoX}px, ${LogoY}px)`
-                LogoX += xVelo
-                LogoY += yVelo
-                //+= allows for multiple transforms
-                Google.style.transform += `rotate(${degree}deg)`
-                // `translate(${LogoX}px, ${LogoY}px)`
-            // }
-            canvas.getContext("2d")
+    setInterval(update, 1000 / FPS )
+    console.log("bouncy")
+}
 
-            // var xInput = document.getElementById('xVelo')
-            // var yInput = document.getElementById('yVelo')
-            // xInput.textContent = Math.floor(LogoX)
-            // yInput.textContent = Math.floor(LogoY)
+function update() {
+    // if (clicks = 1) {
+        // button.disabled = true
+        degree += 15
+        // apply movement first THEN rotate so it works properly
+        Google.style.transform = `translate(${LogoX}px, ${LogoY}px)`
+        LogoX += xVelo
+        LogoY += yVelo
+        //+= allows for multiple transforms
+        Google.style.transform += `rotate(${degree}deg)`
+        // `translate(${LogoX}px, ${LogoY}px)`
+    // }
+    canvas.getContext("2d")
 
-            if (LogoX - size / 2 < -25 && xVelo < 0) {
-                xVelo = -xVelo
-            }
-            else if (LogoX + size * 2 > canvas.width && xVelo > 0) {
-                xVelo = -xVelo
-            }
-            if (LogoY - size / 2 < -25 && yVelo < 0) {
-                yVelo = -yVelo
-            }
-            else if (LogoY + size * 2 > canvas.height && yVelo > 0) {
-                yVelo = -yVelo
-            }
-        }
+    // var xInput = document.getElementById('xVelo')
+    // var yInput = document.getElementById('yVelo')
+    // xInput.textContent = Math.floor(LogoX)
+    // yInput.textContent = Math.floor(LogoY)
 
-        bounce()
+    if (LogoX - size / 2 < -25 && xVelo < 0) {
+        xVelo = -xVelo
+    }
+    else if (LogoX + size * 2 > canvas.width && xVelo > 0) {
+        xVelo = -xVelo
+    }
+    if (LogoY - size / 2 < -25 && yVelo < 0) {
+        yVelo = -yVelo
+    }
+    else if (LogoY + size * 2 > canvas.height && yVelo > 0) {
+        yVelo = -yVelo
+    }
+}
+
+bounce()
+
+function listing() {
+    // let topSites = browser.topSites.get(
+    //     options // object
+    //     )
+    let topSites = browser.history.search(
+        'https://www.netflix.com/watch/80132864?trackId=14170286'
+    )
+    console.log("top sites are " + topSites)
+
+    listInput.textContent = topSites
+}
